@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Fake News Detection — Model Performance{% endblock %}
+{% block body_class %}performance-page{% endblock %}
+{% block content %}
+<style>
+.performance-footnote{margin:12px 2px 0;color:#6a7d98;font-size:11px;line-height:1.5}
+</style>
+<section class="performance-page-content">
+  <div class="performance-heading page-heading">
+    <div><h1>Model Performance</h1><p>Compare the performance of different machine learning algorithms on the test dataset.</p></div>
+  </div>
+  {% if report and report.metrics %}
+  <aside class="dataset-summary surface">
+    <span class="dataset-big-icon" aria-hidden="true"><svg viewBox="0 0 36 36"><ellipse cx="18" cy="7" rx="11" ry="4" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M7 7v22c0 2.2 4.9 4 11 4s11-1.8 11-4V7M7 14c0 2.2 4.9 4 11 4s11-1.8 11-4M7 22c0 2.2 4.9 4 11 4s11-1.8 11-4" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></span>
+    <div class="dataset-title"><strong>Dataset Information</strong></div>
+    <div class="dataset-stat"><span>Total Samples (current dataset)</span><strong>{{ current_dataset_rows if current_dataset_rows is not none else report.get('dataset_rows', '—') }}</strong></div>
+    <div class="dataset-stat"><span>Test Split</span><strong>{{ (report.get('test_size', 0.2) * 100)|round|int }}% ({{ report.get('test_samples', '—') }} samples)</strong></div>
+    <div class="dataset-stat"><span>Classes (current dataset)</span><strong>Real {{ current_label_counts.get('Real', 0) }} / Fake {{ current_label_counts.get('Fake', 0) }}</strong></div>
+  </aside>
+  <div class="performance-grid">
+    <section class="surface chart-card">
+      <div class="section-card-heading"><h2>Classifier Performance Comparison</h2><label class="visually-hidden" for="metric-select">Chart metric</label><select id="metric-select"><option value="accuracy">Accuracy</option><option value="precision_macro">Precision</option><option value="recall_macro">Recall</option><option value="f1_macro" selected>F1-Score</option></select></div>
+      <div class="chart-wrap"><div class="chart-axis" aria-hidden="true"><span>1.0</span><span>0.8</span><span>0.6</span><span>0.4</span><span>0.2</span><span>0.0</span></div><div class="chart-plot"><div class="chart-gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="bar-groups">
+        {% set metric_specs = [('Accuracy', 'accuracy'), ('Precision', 'precision_macro'), ('Recall', 'recall_macro'), ('F1-Score', 'f1_macro')] %}
+        {% for metric_label, metric_key in metric_specs %}<div class="bar-group" data-metric="{{ metric_key }}"><div class="bar-pair">{% for model_name, model_metric in report.metrics.items() %}<span class="metric-bar model-color-{{ loop.index0 % 4 }}" title="{{ model_name }}: {{ (model_metric.get(metric_key, 0) * 100)|round(2) }}%" data-model="{{ model_name }}" data-value="{{ model_metric.get(metric_key, 0) }}" style="height:{{ (model_metric.get(metric_key, 0) * 100)|round(2) }}%"></span>{% endfor %}</div><span class="bar-label">{{ metric_label }}</span></div>{% endfor %}
+      </div></div></div>
+      <div class="chart-legend">{% for model_name, model_metric in report.metrics.items() %}<span><i class="legend-model legend-model-{{ loop.index0 % 4 }}"></i>{{ model_name }}</span>{% endfor %}</div>
+    </section>
+    <section class="surface results-card"><div class="section-card-heading"><h2>Detailed Results</h2></div><div class="table-scroll"><table class="results-table"><thead><tr><th>Classifier</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1-Score</th><th>Test Samples</th></tr></thead><tbody>{% for name, metric in report.metrics.items() %}<tr class="{{ 'selected-model' if name == report.get('selected_model') else '' }}"><th>{{ name }}</th><td>{{ "%.2f"|format(metric.get('accuracy', 0) * 100) }}%</td><td>{{ "%.2f"|format(metric.get('precision_macro', 0) * 100) }}%</td><td>{{ "%.2f"|format(metric.get('recall_macro', 0) * 100) }}%</td><td>{{ "%.2f"|format(metric.get('f1_macro', 0) * 100) }}%</td><td>{{ metric.get('test_samples', report.get('test_samples', '—')) }}</td></tr>{% endfor %}</tbody></table></div><p class="metrics-note">Metrics are calculated on the held-out test split. High test scores do not guarantee real-world news detection accuracy.</p></section>
+  </div>
+  <p class="performance-footnote">Last evaluated dataset: {{ report.get('dataset_rows', '—') }} valid samples · Selected classifier: {{ report.get('selected_model', '—') }}. Retrain after changing the dataset or model definitions to refresh these scores.</p>
+  {% else %}<section class="surface no-evaluation"><h2>Model evaluation is not available yet</h2><p>Train the classifiers to generate real evaluation metrics for this dashboard.</p><code>python train_model.py --no-tune</code></section>{% endif %}
+</section>
+{% endblock %}

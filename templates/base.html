@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Fake News Detection — machine-learning news text classification.">
+  <title>{% block title %}Fake News Detection{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<header class="site-header">
+  <a class="brand" href="{{ url_for('index') }}" aria-label="Fake News Detection home">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40"><path d="M10 9.5 28.5 5v5.5M8 12h24v23H8zM12 17h16M12 22h7M12 27h16M23 22h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="brand-copy">
+      <strong>Fake News Detection</strong>
+      <small>Detect whether a news article is real or fake using machine learning.</small>
+    </span>
+  </a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a class="nav-link {{ 'active' if active_page == 'detector' else '' }}" href="{{ url_for('index') }}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2v8.3a.5.5 0 0 1-.5.5h-6v-6h-5v6h-6a.5.5 0 0 1-.5-.5z" fill="currentColor"/></svg>
+      <span>Home</span>
+    </a>
+    <a class="nav-link {{ 'active' if active_page == 'performance' else '' }}" href="{{ url_for('performance') }}">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V12h4v7zm6 0V6h4v13zm6 0V9h4v10z" fill="currentColor"/></svg>
+      <span>Model Performance</span>
+    </a>
+  </nav>
+</header>
+<main class="site-main">{% block content %}{% endblock %}</main>
+<footer class="site-footer">
+  <span>Fake News Detection · Machine-learning text classification</span>
+  <span>Copyright © 2026 Pritam Rabha. All rights reserved.</span>
+</footer>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

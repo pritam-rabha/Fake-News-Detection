@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Fake News Detection — Home{% endblock %}
+{% block body_class %}home-page{% endblock %}
+{% block content %}
+<section class="home-visual">
+  <div class="home-inner">
+    <section class="hero" id="detector">
+      <h1>Fake News <span>Detection</span></h1>
+      <p>Detect whether a news article is real or fake using machine learning.</p>
+    </section>
+
+    <section class="detector-grid" aria-label="News classification workspace">
+      <section class="surface input-card">
+        <div class="card-heading">
+          <h2>Analyze a News Article</h2>
+          <span id="char-count">0 / {{ "{:,}".format(config['MAX_NEWS_CHARS']) }} characters</span>
+        </div>
+        <div class="input-tabs" role="tablist" aria-label="Choose news input method">
+          <button class="input-tab active" type="button" data-input-tab="text" role="tab" aria-selected="true"><span class="tab-file-icon" aria-hidden="true">▤</span> Enter Text</button>
+        </div>
+        <form action="{{ url_for('predict') }}" method="post" id="analysis-form">
+          <div id="text-panel" class="input-panel">
+            <label class="visually-hidden" for="news_text">News article or headline</label>
+            <textarea id="news_text" name="news_text" maxlength="{{ config['MAX_NEWS_CHARS'] }}" placeholder="Paste a news article, headline or any text here to check if it is real or fake...">{{ request.form.get('news_text', '') }}</textarea>
+          </div>
+          {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+          <div class="form-actions">
+            <button class="button button-primary" id="analyze-button" type="submit"><span class="search-icon" aria-hidden="true"></span> Analyze News</button>
+            <button class="button button-secondary" type="button" id="clear-input"><span class="reset-icon" aria-hidden="true">↻</span> Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="surface prediction-card" aria-live="polite">
+        <h2>Prediction Result</h2>
+        {% if result %}
+          <div class="prediction-content">
+            <div class="document-icon {{ 'fake' if result.label == 'fake' else 'real' }}" aria-hidden="true">{% if result.label == 'fake' %}<span>!</span>{% else %}<span>✓</span>{% endif %}</div>
+            <p class="prediction-kicker">MODEL PREDICTION</p>
+            <h3 class="prediction-title {{ 'fake-text' if result.label == 'fake' else 'real-text' }}">{{ result.label_display }}</h3>
+            <p class="prediction-description">The classifier matched patterns associated with the {{ result.label }}-news class in its training data.</p>
+            <div class="prediction-details"><div><span>Model</span><strong>{{ result.model }}</strong></div><div><span>Confidence</span><strong>{% if result.confidence is not none %}{{ result.confidence }}%{% else %}Not available{% endif %}</strong></div></div>
+            {% if result.confidence is not none %}<div class="confidence-track" aria-label="Model confidence {{ result.confidence }} percent"><span style="width: {{ result.confidence }}%"></span></div>{% endif %}
+            {% if result.source_name %}<p class="source-note">Analyzed file: {{ result.source_name }}</p>{% endif %}
+            <p class="verification-note">This is a machine-learning prediction, not a verified fact-check. Verify important claims using reliable independent sources.</p>
+          </div>
+        {% else %}
+          <div class="prediction-empty">
+            <div class="document-icon" aria-hidden="true"><svg viewBox="0 0 48 56"><path d="M9 3h21l10 10v39H9zM30 3v11h10M16 22h17M16 29h17M16 36h13M16 43h17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>No analysis yet</h3>
+            <p>Enter a news article on the left and click “Analyze News” to get the prediction result.</p>
+          </div>
+        {% endif %}
+      </section>
+    </section>
+  </div>
+</section>
+{% endblock %}
