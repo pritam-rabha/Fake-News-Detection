@@ -1,53 +1,75 @@
+import pytest
+
+
 def test_homepage(app):
+    """The homepage should load with text-based news input."""
     response = app.test_client().get("/")
+
     assert response.status_code == 200
     assert b"Fake News" in response.data
-    assert b"Upload News File" in response.data
-    assert b"Model Performance" in response.data
+    assert b"news_text" in response.data
+    assert b"Upload News File" not in response.data
+
 
 def test_performance_page_is_separate(app):
+    """The performance dashboard should have its own page."""
     response = app.test_client().get("/performance")
+
     assert response.status_code == 200
     assert b"Model Performance" in response.data
     assert b"Analyze a News Article" not in response.data
 
+
 def test_health(app):
+    """The health endpoint should return the application status."""
     response = app.test_client().get("/health")
-    assert response.status_code == 200 and response.json["status"] == "ok"
+
+    assert response.status_code == 200
+    assert response.json["status"] == "ok"
+    assert "model" in response.json
+
 
 def test_about_removed(app):
+    """The removed About page should return 404."""
     response = app.test_client().get("/about")
+
     assert response.status_code == 404
+
 
 def test_methodology_removed(app):
+    """The removed Methodology page should return 404."""
     response = app.test_client().get("/methodology")
+
     assert response.status_code == 404
 
+
 def test_empty_submission(app):
-    response = app.test_client().post("/predict", data={"news_text": "   "})
-    assert response.status_code == 400 and b"Please enter" in response.data
+    """Empty or whitespace-only news should be rejected."""
+    response = app.test_client().post(
+        "/predict",
+        data={"news_text": "   "},
+    )
+
+    assert response.status_code == 400
+    assert b"Please enter" in response.data
+
 
 def test_too_long_submission(app):
+    """News exceeding the configured character limit should be rejected."""
     app.config["MAX_NEWS_CHARS"] = 20
-    response = app.test_client().post("/predict", data={"news_text": "x" * 21})
+
+    response = app.test_client().post(
+        "/predict",
+        data={"news_text": "x" * 21},
+    )
+
     assert response.status_code == 400
+    assert b"exceeds the" in response.data
 
 
-def test_text_file_upload_extracts_content():
-    import io
-    from werkzeug.datastructures import FileStorage
-    from app import extract_uploaded_text
-    upload = FileStorage(stream=io.BytesIO(b"Headline\nArticle body text."), filename="news.txt")
-    text, filename = extract_uploaded_text(upload)
-    assert "Article body text." in text
-    assert filename == "news.txt"
+def test_evaluation_redirect(app):
+    """The legacy evaluation URL should redirect to the performance page."""
+    response = app.test_client().get("/evaluation")
 
-
-def test_unsupported_file_type_rejected():
-    import io
-    import pytest
-    from werkzeug.datastructures import FileStorage
-    from app import extract_uploaded_text
-    upload = FileStorage(stream=io.BytesIO(b"not executable"), filename="news.exe")
-    with pytest.raises(ValueError, match="Unsupported file type"):
-        extract_uploaded_text(upload)
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/performance")

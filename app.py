@@ -39,9 +39,9 @@ def create_app(test_config=None):
         app.config.update(test_config)
 
     detector = NewsDetector(
-        Path(app.config["DATASET_PATH"]),
-        Path(app.config["MODEL_DIR"]),
-        app.config.get("MODEL_NAME", "Logistic Regression"),
+    Path(app.config["DATASET_PATH"]),
+    Path(app.config["MODEL_DIR"]),
+    app.config.get("MODEL_NAME", "Linear SVM"),
     )
     app.extensions["news_detector"] = detector
 

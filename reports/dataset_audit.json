@@ -1,0 +1,21 @@
+{
+  "original_rows": 72134,
+  "current_rows": 20000,
+  "original_label_counts": {
+    "fake": 35028,
+    "real": 37106
+  },
+  "current_label_counts": {
+    "real": 10000,
+    "fake": 10000
+  },
+  "current_exact_duplicates": 0,
+  "current_unique_normalized_articles": 20000,
+  "matched_to_original": 20000,
+  "unmatched_current_rows": 0,
+  "matched_label_mismatches": 0,
+  "matches_with_ambiguous_source_labels": 0,
+  "original_sha256": "665331424230fc452e9482c3547a6a199a2c29745ade8d236950d1d105223773",
+  "current_sha256": "d9d961199a76751d84943eb3217d7f4cfa0a87c1b99b5a68bcea4eb239d0571b",
+  "interpretation": "A successful text match checks label conversion, not factual correctness. Unmatched rows may differ in formatting or content."
+}

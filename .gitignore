@@ -12,3 +12,7 @@ htmlcov/
 data/raw/
 # Large generated models
 artifacts/*.joblib
+
+# Backup model files
+backup_models/
+backup_models/

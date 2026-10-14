@@ -13,10 +13,6 @@
     updateCounter();
   }
 
-  if (fileInput) fileInput.addEventListener("change", () => {
-    if (fileName) fileName.textContent = fileInput.files && fileInput.files.length ? fileInput.files[0].name : "No file selected";
-  });
-
   if (clearButton) clearButton.addEventListener("click", () => {
     if (input) input.value = "";
     if (counter && input) counter.textContent = `0 / ${Number(input.maxLength).toLocaleString()} characters`;

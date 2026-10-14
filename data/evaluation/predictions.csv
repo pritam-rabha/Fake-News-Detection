@@ -1,0 +1,25 @@
+category,text,provisional_label,model,prediction
+government_scam,The government announced that every citizen will receive 50000 rupees tomorrow. Share this message with 10 people and register on an unofficial website to receive the payment.,fake,Logistic Regression,real
+government_scam,The government announced that every citizen will receive 50000 rupees tomorrow. Share this message with 10 people and register on an unofficial website to receive the payment.,fake,Multinomial Naive Bayes,real
+government_scam,The government announced that every citizen will receive 50000 rupees tomorrow. Share this message with 10 people and register on an unofficial website to receive the payment.,fake,Linear SVM,real
+government_scam,The government announced that every citizen will receive 50000 rupees tomorrow. Share this message with 10 people and register on an unofficial website to receive the payment.,fake,Random Forest,real
+prize_scam,Congratulations! You have won a free iPhone. Pay a processing fee immediately and send your bank details to claim your prize.,fake,Logistic Regression,real
+prize_scam,Congratulations! You have won a free iPhone. Pay a processing fee immediately and send your bank details to claim your prize.,fake,Multinomial Naive Bayes,fake
+prize_scam,Congratulations! You have won a free iPhone. Pay a processing fee immediately and send your bank details to claim your prize.,fake,Linear SVM,real
+prize_scam,Congratulations! You have won a free iPhone. Pay a processing fee immediately and send your bank details to claim your prize.,fake,Random Forest,real
+news_style,"The central bank released its annual report on economic growth, inflation and financial stability.",real,Logistic Regression,real
+news_style,"The central bank released its annual report on economic growth, inflation and financial stability.",real,Multinomial Naive Bayes,fake
+news_style,"The central bank released its annual report on economic growth, inflation and financial stability.",real,Linear SVM,real
+news_style,"The central bank released its annual report on economic growth, inflation and financial stability.",real,Random Forest,real
+news_style,"According to an official announcement, the central bank published its annual report on economic growth and inflation.",real,Logistic Regression,real
+news_style,"According to an official announcement, the central bank published its annual report on economic growth and inflation.",real,Multinomial Naive Bayes,fake
+news_style,"According to an official announcement, the central bank published its annual report on economic growth and inflation.",real,Linear SVM,real
+news_style,"According to an official announcement, the central bank published its annual report on economic growth and inflation.",real,Random Forest,real
+unverified_claim,"A politician secretly announced a new policy, but no official statement or reliable report has confirmed the announcement.",uncertain,Logistic Regression,real
+unverified_claim,"A politician secretly announced a new policy, but no official statement or reliable report has confirmed the announcement.",uncertain,Multinomial Naive Bayes,fake
+unverified_claim,"A politician secretly announced a new policy, but no official statement or reliable report has confirmed the announcement.",uncertain,Linear SVM,real
+unverified_claim,"A politician secretly announced a new policy, but no official statement or reliable report has confirmed the announcement.",uncertain,Random Forest,real
+ambiguous,A new announcement has been made today.,uncertain,Logistic Regression,real
+ambiguous,A new announcement has been made today.,uncertain,Multinomial Naive Bayes,real
+ambiguous,A new announcement has been made today.,uncertain,Linear SVM,real
+ambiguous,A new announcement has been made today.,uncertain,Random Forest,real

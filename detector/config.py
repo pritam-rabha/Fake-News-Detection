@@ -6,4 +6,4 @@ class Config:
     MAX_NEWS_CHARS = int(os.environ.get("MAX_NEWS_CHARS", "5000"))
     DATASET_PATH = os.environ.get("DATASET_PATH", str(ROOT / "data" / "news_dataset.csv"))
     MODEL_DIR = os.environ.get("MODEL_DIR", str(ROOT / "artifacts"))
-    MODEL_NAME = os.environ.get("MODEL_NAME", "Logistic Regression")
+    MODEL_NAME = os.environ.get("MODEL_NAME", "Linear SVM")

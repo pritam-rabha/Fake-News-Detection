@@ -6,7 +6,12 @@ from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
-MODEL_NAMES = ["Logistic Regression", "Multinomial Naive Bayes", "Linear SVM", "Random Forest"]
+MODEL_NAMES = [
+    "Logistic Regression",
+    "Multinomial Naive Bayes",
+    "Linear SVM",
+    "Random Forest",
+]
 def build_pipeline(model_name):
     estimators = {
         "Logistic Regression": LogisticRegression(max_iter=1200, class_weight="balanced", random_state=42),

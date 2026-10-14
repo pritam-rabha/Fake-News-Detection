@@ -1,0 +1,7 @@
+text,label,category
+"The government announced that every citizen will receive 50000 rupees tomorrow. Share this message with 10 people and register on an unofficial website to receive the payment.",fake,government_scam
+"Congratulations! You have won a free iPhone. Pay a processing fee immediately and send your bank details to claim your prize.",fake,prize_scam
+"The central bank released its annual report on economic growth, inflation and financial stability.",real,news_style
+"According to an official announcement, the central bank published its annual report on economic growth and inflation.",real,news_style
+"A politician secretly announced a new policy, but no official statement or reliable report has confirmed the announcement.",uncertain,unverified_claim
+"A new announcement has been made today.",uncertain,ambiguous

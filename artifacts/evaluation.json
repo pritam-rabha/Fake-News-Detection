@@ -1,0 +1,210 @@
+{
+  "selected_model": "Linear SVM",
+  "dataset_rows": 20000,
+  "dataset_signature": "d9d961199a76751d84943eb3217d7f4cfa0a87c1b99b5a68bcea4eb239d0571b",
+  "test_size": 0.2,
+  "test_samples": 4000,
+  "label_counts": {
+    "real": 10000,
+    "fake": 10000
+  },
+  "metrics": {
+    "Logistic Regression": {
+      "accuracy": 0.9225,
+      "precision_macro": 0.9229,
+      "recall_macro": 0.9225,
+      "f1_macro": 0.9225,
+      "confusion_matrix_labels": [
+        "fake",
+        "real"
+      ],
+      "confusion_matrix": [
+        [
+          1814,
+          186
+        ],
+        [
+          124,
+          1876
+        ]
+      ],
+      "classification_report": {
+        "fake": {
+          "precision": 0.936016511867905,
+          "recall": 0.907,
+          "f1-score": 0.9212798374809548,
+          "support": 2000.0
+        },
+        "real": {
+          "precision": 0.9097963142580019,
+          "recall": 0.938,
+          "f1-score": 0.9236829148202855,
+          "support": 2000.0
+        },
+        "accuracy": 0.9225,
+        "macro avg": {
+          "precision": 0.9229064130629534,
+          "recall": 0.9225,
+          "f1-score": 0.9224813761506201,
+          "support": 4000.0
+        },
+        "weighted avg": {
+          "precision": 0.9229064130629534,
+          "recall": 0.9225,
+          "f1-score": 0.9224813761506201,
+          "support": 4000.0
+        }
+      },
+      "best_params": {},
+      "test_samples": 4000
+    },
+    "Multinomial Naive Bayes": {
+      "accuracy": 0.8592,
+      "precision_macro": 0.8604,
+      "recall_macro": 0.8593,
+      "f1_macro": 0.8591,
+      "confusion_matrix_labels": [
+        "fake",
+        "real"
+      ],
+      "confusion_matrix": [
+        [
+          1661,
+          339
+        ],
+        [
+          224,
+          1776
+        ]
+      ],
+      "classification_report": {
+        "fake": {
+          "precision": 0.8811671087533156,
+          "recall": 0.8305,
+          "f1-score": 0.8550836550836551,
+          "support": 2000.0
+        },
+        "real": {
+          "precision": 0.8397163120567376,
+          "recall": 0.888,
+          "f1-score": 0.86318347509113,
+          "support": 2000.0
+        },
+        "accuracy": 0.85925,
+        "macro avg": {
+          "precision": 0.8604417104050266,
+          "recall": 0.8592500000000001,
+          "f1-score": 0.8591335650873926,
+          "support": 4000.0
+        },
+        "weighted avg": {
+          "precision": 0.8604417104050266,
+          "recall": 0.85925,
+          "f1-score": 0.8591335650873926,
+          "support": 4000.0
+        }
+      },
+      "best_params": {},
+      "test_samples": 4000
+    },
+    "Linear SVM": {
+      "accuracy": 0.9433,
+      "precision_macro": 0.9433,
+      "recall_macro": 0.9432,
+      "f1_macro": 0.9432,
+      "confusion_matrix_labels": [
+        "fake",
+        "real"
+      ],
+      "confusion_matrix": [
+        [
+          1873,
+          127
+        ],
+        [
+          100,
+          1900
+        ]
+      ],
+      "classification_report": {
+        "fake": {
+          "precision": 0.9493157627977699,
+          "recall": 0.9365,
+          "f1-score": 0.9428643342562295,
+          "support": 2000.0
+        },
+        "real": {
+          "precision": 0.9373458312777504,
+          "recall": 0.95,
+          "f1-score": 0.9436304941643904,
+          "support": 2000.0
+        },
+        "accuracy": 0.94325,
+        "macro avg": {
+          "precision": 0.9433307970377601,
+          "recall": 0.9432499999999999,
+          "f1-score": 0.94324741421031,
+          "support": 4000.0
+        },
+        "weighted avg": {
+          "precision": 0.9433307970377601,
+          "recall": 0.94325,
+          "f1-score": 0.9432474142103099,
+          "support": 4000.0
+        }
+      },
+      "best_params": {},
+      "test_samples": 4000
+    },
+    "Random Forest": {
+      "accuracy": 0.9235,
+      "precision_macro": 0.9236,
+      "recall_macro": 0.9235,
+      "f1_macro": 0.9235,
+      "confusion_matrix_labels": [
+        "fake",
+        "real"
+      ],
+      "confusion_matrix": [
+        [
+          1830,
+          170
+        ],
+        [
+          136,
+          1864
+        ]
+      ],
+      "classification_report": {
+        "fake": {
+          "precision": 0.930824008138352,
+          "recall": 0.915,
+          "f1-score": 0.9228441754916793,
+          "support": 2000.0
+        },
+        "real": {
+          "precision": 0.9164208456243854,
+          "recall": 0.932,
+          "f1-score": 0.9241447694595935,
+          "support": 2000.0
+        },
+        "accuracy": 0.9235,
+        "macro avg": {
+          "precision": 0.9236224268813686,
+          "recall": 0.9235,
+          "f1-score": 0.9234944724756364,
+          "support": 4000.0
+        },
+        "weighted avg": {
+          "precision": 0.9236224268813688,
+          "recall": 0.9235,
+          "f1-score": 0.9234944724756363,
+          "support": 4000.0
+        }
+      },
+      "best_params": {},
+      "test_samples": 4000
+    }
+  },
+  "note": "Metrics are from a hold-out split and do not establish real-world fact-checking accuracy."
+}
