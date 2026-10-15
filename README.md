@@ -1,28 +1,73 @@
-# Fake News Detection — News Text Classification
+# Fake News Detection
 
-A Flask web application for classifying news-like text with a dedicated Home page and a separate Model Performance page. The Home page supports pasted text and TXT, MD, CSV, PDF, and DOCX uploads. It includes text preprocessing, TF-IDF feature extraction, four classifiers, hyperparameter tuning, standard evaluation metrics, and a browser interface.
+A machine-learning web application that classifies news text as **Likely Fake** or **Likely Real** using natural language processing and supervised learning.
 
-> **Important:** This is an educational ML demonstration, not a fact-checking authority. The bundled dataset contains illustrative examples created for software demonstration. It is not a validated news corpus and cannot support real-world accuracy claims. Replace it with a properly sourced, licensed, representative dataset before evaluating practical usefulness.
+## Live Demo
 
-## Project information
-- **Author:** Pritam Rabha
-- **Programme:** MCA, 3rd Semester
-- **Course:** Python Programming
-- **Project Guide:** Dr. Pangambam Sendash Singh
-- **Institution:** Dr. Hari Singh Gour Vishwavidyalaya, Sagar, Madhya Pradesh
-- **Copyright:** Copyright © 2026 Pritam Rabha. All rights reserved.
+**Live application:** [Fake News Detection](https://fake-news-detection-fcd8.onrender.com)
 
-This is an independent academic project, not an official university application or an endorsement by the institution.
+> **Important:** This project provides a machine-learning prediction, not a verified fact-check. Predictions can be incorrect. Verify important claims using reliable, independent sources.
 
-## Assignment requirements
-1. **Text preprocessing:** lowercasing, tokenization, stopword removal, stemming, and lemmatization when NLTK WordNet is available.
-2. **TF-IDF:** word unigrams and bigrams.
-3. **Multiple models:** Logistic Regression, Multinomial Naive Bayes, Linear SVM, and Random Forest.
-4. **Hyperparameter tuning:** GridSearchCV with stratified cross-validation.
-5. **Evaluation:** accuracy, macro precision, macro recall, macro F1, confusion matrix, and classification report.
-6. **Deployment:** Flask, Gunicorn, and Render configuration.
+## Author and Academic Details
 
-## Structure
+| Field | Details |
+|---|---|
+| Author | Pritam Rabha |
+| Programme | MCA, 3rd Semester |
+| Course | Python Programming |
+| Project | Fake News Detection |
+| Institution | Dr. Hari Singh Gour Vishwavidyalaya, Sagar, Madhya Pradesh |
+| Focus | Python, Machine Learning, and Natural Language Processing |
+
+## Contents
+
+1. [Features](#features)
+2. [Technology Stack](#technology-stack)
+3. [Machine-Learning Models](#machine-learning-models)
+4. [Project Structure](#project-structure)
+5. [Run Locally](#run-locally)
+6. [Training and Evaluation](#training-and-evaluation)
+7. [Deployment](#deployment)
+8. [Limitations](#limitations)
+9. [Author and Copyright](#author-and-copyright)
+
+## Features
+
+- Classifies submitted news text as **Likely Fake** or **Likely Real**
+- Text preprocessing for natural language processing
+- TF-IDF feature extraction
+- Four supervised machine-learning models
+- Model performance page with evaluation metrics
+- Responsive web interface
+- Input validation and a warning that predictions are not fact-checks
+
+## Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Application and machine-learning logic |
+| Flask | Web application framework |
+| scikit-learn | Text vectorization, classifiers, and evaluation |
+| TF-IDF | Converts text into numerical features |
+| NLTK | Text preprocessing |
+| HTML, CSS, JavaScript | Frontend interface |
+| Plotly / charts | Model performance visualisation, if enabled |
+| Gunicorn | Production WSGI server |
+| Render | Web deployment |
+
+## Machine-Learning Models
+
+The project supports these classifiers:
+
+- Logistic Regression
+- Multinomial Naive Bayes
+- Linear Support Vector Machine (Linear SVM)
+- Random Forest
+
+The training workflow evaluates the models on a held-out test split and records metrics such as accuracy and macro F1-score. Evaluation results depend on the dataset and split used.
+
+## Project Structure
+
 ```text
 Fake_News_Detection/
 ├── app.py
@@ -31,120 +76,94 @@ Fake_News_Detection/
 ├── requirements-dev.txt
 ├── render.yaml
 ├── gunicorn.conf.py
-├── .env.example
-├── .gitignore
-├── README.md
-├── PROJECT_REPORT.md
 ├── detector/
-├── data/news_dataset.csv
+│   ├── config.py
+│   ├── models.py
+│   ├── predictor.py
+│   ├── preprocessing.py
+│   └── training.py
 ├── templates/
-├── static/css/style.css
-├── static/js/app.js
-├── static/images/newspaper-background.png
-└── tests/
+├── static/
+├── tests/
+├── data/
+│   └── news_dataset.csv
+├── artifacts/
+└── docs/
+    └── fake_news_detection_demo_examples.pdf
 ```
 
-## Setup on Ubuntu
+Some generated files, datasets, or folders may be ignored by Git or created during training.
+
+## Run Locally
+
+Requires Python 3.11 or a compatible Python version supported by the dependencies.
+
 ```bash
-cd Fake_News_Detection
+# 1. Clone the repository
+git clone https://github.com/pritam-rabha/Fake-News-Detection.git
+cd Fake-News-Detection
+
+# 2. Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements-dev.txt
-```
-For full WordNet lemmatization, download the NLTK resource once:
-```bash
-python -m nltk.downloader wordnet
-```
-If WordNet is unavailable, the preprocessor continues with stemming.
 
-## Train and evaluate
-Quick baseline:
+# 3. Install dependencies
+pip install -r requirements.txt
+```
+
+Train the models if the required model artifacts are not available:
+
 ```bash
 python train_model.py --no-tune
 ```
-Compare models with hyperparameter tuning:
-```bash
-python train_model.py
-```
-The training script saves model files and `evaluation.json` in `artifacts/`. The metrics are for a held-out split and do not establish real-world fact-checking accuracy. The included data is illustrative and too small for meaningful claims.
 
-## Run the web app
+Start the Flask application using the repository's configured entry point:
+
 ```bash
 python app.py
 ```
-Open <http://127.0.0.1:5000>. The app also exposes `/performance` for model metrics and `/health` for service status. The legacy `/evaluation` route redirects to `/performance`. If no model artifact exists, the app trains a baseline model at first startup; training can take time.
 
-## Dataset format
-Use a CSV with `text` and `label` columns; labels must be `real` or `fake`:
-```csv
-text,label
-"Example article text","real"
-"Another example text","fake"
-```
-Use a sourced, licensed, representative dataset for actual evaluation. Do not treat the included illustrative examples as verified news.
+Open the local URL printed by Flask, commonly `http://127.0.0.1:5000`.
 
-## Metrics
-Accuracy, macro precision, macro recall, macro F1, confusion matrix, classification report, and tuned hyperparameters are saved in the evaluation report. Inspect the metrics together rather than relying on accuracy alone.
+## Training and Evaluation
 
-## Configuration
-Optional environment variables: `SECRET_KEY`, `MAX_NEWS_CHARS`, `DATASET_PATH`, `MODEL_DIR`, and `MODEL_NAME`. The app reads process environment variables; it does not automatically load `.env`. For local use:
+Train the models with:
+
 ```bash
-export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(48))')"
+python train_model.py --no-tune
 ```
 
-## Tests
+The training process evaluates each configured classifier and saves model artifacts and evaluation results in the configured artifacts directory.
+
+To run tests:
+
 ```bash
-python -m pytest -q
+pytest -q
 ```
-The tests cover routes, input validation, preprocessing, dataset validation, and baseline model training. Report the actual result after running the tests.
 
-## Deploy to Render
-1. Push the project to GitHub.
-2. In Render choose **New → Blueprint** and select the repository.
-3. Review `render.yaml` and deploy.
-4. Check build and runtime logs.
+Use the Model Performance page to review the metrics generated by the current training run. Test accuracy alone does not guarantee reliable performance on new or misleading news examples.
 
-Build command trains a baseline model; start command is:
-```bash
-gunicorn app:app -c gunicorn.conf.py
-```
-Health check path: `/health`. Model artifacts are ignored by Git, so the Render build command creates them. Free instances may have limited memory/time; if build or startup is constrained, use a larger dataset/model workflow or a suitable hosting plan.
+## Deployment
 
-## Limitations and responsible use
-- Predictions are not proof that a story is true or false.
-- The bundled dataset is synthetic/illustrative; its performance scores are not meaningful evidence of real-world accuracy.
-- Satire, opinion, emerging events, paraphrases, and unfamiliar topics can be misclassified.
-- Model probability outputs are not necessarily calibrated.
-- The app cannot replace primary sources or independent fact-checking.
+The application is deployed on Render:
+
+**[Open Fake News Detection](https://fake-news-detection-fcd8.onrender.com)**
+
+If deploying your own copy, connect the GitHub repository to Render and use the build and start commands configured for the project. Check Render's build logs if deployment fails.
+
+Free web services can spin down after inactivity, causing the first request to take longer. Any files written to an ephemeral deployment filesystem may not persist across restarts or redeployments.
+
+## Limitations
+
+- The classifier learns patterns from labelled training data; it does not independently verify claims against trusted news sources.
+- Incorrect, biased, or noisy training labels can affect predictions.
+- News style and topics may change over time, reducing generalisation.
+- Scam-pattern screening, if enabled, is heuristic and can produce false positives or false negatives.
+- High test-set metrics do not guarantee accuracy on every real-world example.
+- Do not use the application as the sole basis for important decisions.
 
 ## Copyright
-Copyright © 2026 Pritam Rabha. All rights reserved. Third-party libraries remain under their own licences. The university name is included for academic identification only.
 
+Copyright © 2026 Pritam Rabha. All rights reserved.
 
-## Interface pages
-
-- `/` — Home page with newspaper background, text entry, supported news-file upload, and prediction result.
-- `/performance` — separate Model Performance page with dataset summary, classifier chart, and measured results.
-- `/health` — service health status.
-- `/evaluation` — compatibility redirect to `/performance`.
-
-The Home page uses the supplied newspaper image as a softened background. The Model Performance page uses a clean, light dashboard layout. Evaluation values are loaded from the saved training report; the page does not fabricate metrics.
-
-
-## Interface
-
-The interface is intentionally focused on two screens: the Detector workspace and Model performance report. The design uses responsive layouts and compact navigation without separate About or Methodology pages. Evaluation values are loaded from the saved training report; no placeholder metrics are generated.
-
-
-The responsive interface has two separate screens: Home and Model Performance. The Home page includes text input, file upload, character counting, prediction details, and a verification reminder.
-
-
-Navigation contains only the News detector and Model performance screens. Separate Methodology and About pages/routes are not included.
-
-
-## Interface
-
-The Home page contains only the news detector workspace. Model Performance is a separate route and page. Prediction and evaluation data are read from the Flask/Scikit-learn backend. The evaluation chart and table are populated from `artifacts/evaluation.json`; the app does not invent placeholder model scores.
-
-The train/test split is 80/20. Displayed scores are held-out test-set metrics for this project's dataset, not guarantees of real-world fake-news detection accuracy. About and Methodology pages are intentionally omitted.
+This is an academic project and is not an official application of Dr. Hari Singh Gour Vishwavidyalaya. The institution name is included for academic identification only and does not imply university endorsement.
